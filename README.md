@@ -1,44 +1,38 @@
-# Jenkins CI/CD for HTML Website
+# Jenkins Deployment Job for a Static Website
 
-This project is a small CI/CD setup I made to understand how Jenkins works.
+A Jenkins freestyle job that pulls a static HTML website from GitHub and deploys it to a local Apache server (XAMPP) on Windows.
 
-I created a simple HTML website and uploaded the code to GitHub. Then I installed Jenkins on my Windows machine and connected it to the GitHub repo.
+## What it does
 
-## What this project does
-Whenever I update my HTML files on GitHub, Jenkins automatically:
-1. Pulls the latest code from the repo
-2. Copies it into the XAMPP htdocs folder
-3. Updates the website on http://localhost/site1/
+When the job runs, Jenkins:
+1. Pulls the latest code from this repository
+2. Copies the files into the XAMPP htdocs folder
+3. Serves the updated site at http://localhost/site1/
 
-So the site gets deployed without me doing it manually.
+## Tools
 
-## Tools I used
 - GitHub
-- Jenkins (freestyle job)
-- XAMPP (Apache server)
-- Windows batch commands for deployment
+- Jenkins (freestyle job, Git and GitHub plugins)
+- XAMPP (Apache)
+- Windows batch command
 
-## How I set it up
-1. Made a new GitHub repo for the website
-2. Installed Jenkins and added Git + GitHub plugin
-3. Created a Freestyle Job in Jenkins
-4. Added my GitHub repo link and personal access token
-5. Added a build step with this command:
+## Setup
 
-xcopy "%WORKSPACE%\*" "C:\xampp\htdocs\site1" /E /I /Y
+1. Create a GitHub repository for the site
+2. Install Jenkins with the Git and GitHub plugins
+3. Create a Freestyle job and add the repository URL with a credential
+4. Add a Windows batch build step:
 
-6. After saving, I clicked Build Now and the website deployed.
+   xcopy "%WORKSPACE%\*" "C:\xampp\htdocs\site1" /E /I /Y
 
-## What I learned
-- Basic idea of CI/CD
-- How Jenkins pulls code from GitHub
-- Automating deployments
-- Connecting Jenkins with Apache (XAMPP)
+5. Run the job with **Build Now**
 
-## Folder structure
-site1/
-  - index.html
-  -  contact.html
+## Repository structure
 
-## Future improvements
-- Add GitHub webhooks for automatic trigger
+- index.html
+- contacte.html
+
+## Limitations and next steps
+
+- The job is started manually. Adding a GitHub webhook would trigger it on every push.
+- It deploys to a local machine. The next step is deploying to a cloud server such as AWS EC2.
